@@ -496,11 +496,14 @@ const migrationTrendChart = {
     },
 
     "mark": {
-        "type": "line",
-        "point": true,
-        "strokeDash": [5, 4],
-        "strokeWidth": 3
+    "type": "line",
+    "point": {
+        "filled": true,
+        "size": 70
     },
+    "strokeDash": [5, 4],
+    "strokeWidth": 3
+},
 
     "encoding": {
         "x": {
@@ -523,7 +526,15 @@ const migrationTrendChart = {
                 "domain": TREND_REGIONS,
                 "range": TREND_RANGE
             },
-            "legend": null
+            "legend": {
+                "title": "Region",
+                "orient": "bottom",
+                "columns": 1,
+                "symbolType": "circle",
+                "symbolSize": 180,
+                "labelFontSize": 13,
+                "titleFontSize": 14
+            }
         },
 
         "tooltip": [
@@ -540,10 +551,11 @@ vegaEmbed("#migrationTrendVis", migrationTrendChart, {actions:false});
 
 const densityChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 360,
-    "height": 220,
+
+    "width": 390,
+    "height": 300,
     "padding": 5,
-    
+
     "data": {"url": "Data/density_clean.csv"},
 
     "title": {
@@ -553,7 +565,7 @@ const densityChart = {
         "fontSize": 16,
         "subtitleFontSize": 11
     },
-    
+
     "layer": [
         {
             "mark": {
@@ -565,25 +577,31 @@ const densityChart = {
                 "y": {"datum": 0}
             }
         },
+
         {
             "mark": {
                 "type": "circle",
-                "size": 950,
+                "size": 850,
                 "opacity": 0.9,
                 "stroke": "white",
                 "strokeWidth": 3
             },
+
             "encoding": {
                 "x": {
                     "field": "Density",
                     "type": "quantitative",
-                    "title": "Population density"
+                    "title": "Population density",
+                    "scale": {"domain": [0, 9000]}
                 },
+
                 "y": {
                     "field": "Migration",
                     "type": "quantitative",
-                    "title": "Net internal migration"
+                    "title": "Net internal migration",
+                    "scale": {"domain": [-7000, 5500]}
                 },
+
                 "color": {
                     "field": "Region",
                     "type": "nominal",
@@ -591,20 +609,21 @@ const densityChart = {
                         "domain": REGION_DOMAIN,
                         "range": REGION_RANGE
                     },
-                    "legend":  {
+                    "legend": {
                         "title": "Region",
                         "orient": "bottom",
                         "columns": 2,
                         "symbolType": "circle",
-                        "symbolSize": 180,
+                        "symbolSize": 160,
                         "labelFontSize": 12,
                         "titleFontSize": 13
                     }
                 },
+
                 "tooltip": [
-                    {"field": "Region"},
-                    {"field": "Density", "format": ","},
-                    {"field": "Migration", "format": ","}
+                    {"field": "Region", "title": "Region"},
+                    {"field": "Density", "title": "Population density", "format": ","},
+                    {"field": "Migration", "title": "Net internal migration", "format": ","}
                 ]
             }
         }
@@ -661,8 +680,8 @@ fetch("Data/population_size.csv")
         const populationSizeChart = {
             "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-            "width": 360,
-            "height": 330,
+            "width": 390,
+            "height": 300,
 
             "title": {
                 "text": "Population scale varies by region",
@@ -996,6 +1015,47 @@ const componentsChart = {
                     {"field": "Value", "format": ","}
                 ]
             }
+        }, 
+        {
+            "mark": {
+                "type": "text",
+                "fontSize": 11,
+                "fontWeight": "600",
+                "dx": 8,
+                "baseline": "middle"
+            },
+            "encoding": {
+                "y": {
+                    "field": "Region",
+                    "type": "nominal"
+                },
+                "yOffset": {
+                    "field": "Component",
+                    "type": "nominal"
+                },
+                "x": {
+                    "field": "Value",
+                    "type": "quantitative"
+                },
+                "text": {
+                    "field": "Value",
+                    "type": "quantitative",
+                    "format": ","
+                },
+                "color": {
+                    "field": "Component",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": [
+                            "Natural increase",
+                            "Net internal migration",
+                            "Net overseas migration"
+                        ],
+                        "range": [PALE_BLUE, BLUE, ORANGE]
+                    },
+                    "legend": null
+                }
+            }
         }
     ],
 
@@ -1007,7 +1067,7 @@ vegaEmbed("#componentsVis", componentsChart, {actions:false});
 const lifestyleChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-    "width": 360,
+    "width": 420,
     "height": 360,
     "padding": {"left": 5, "right": 5, "top": 5, "bottom": 5},
 
@@ -1129,7 +1189,7 @@ vegaEmbed("#lifestyleVis", lifestyleChart, {actions:false});
 
 const housingChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 360,
+    "width": 420,
     "height": 320,
     "padding": {"left": 10, "right": 10, "top": 10, "bottom": 10},
 
