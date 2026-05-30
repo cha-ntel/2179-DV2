@@ -553,7 +553,7 @@ const densityChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "width": 390,
-    "height": 300,
+    "height": 250,
     "padding": 5,
 
     "data": {"url": "Data/density_clean.csv"},
@@ -681,7 +681,7 @@ fetch("Data/population_size.csv")
             "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
             "width": 390,
-            "height": 300,
+            "height": 250,
 
             "title": {
                 "text": "Population scale varies by region",
