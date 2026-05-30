@@ -1,13 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My First HTML Document</title>
-</head>
-<body>
-    <h2> Hyperlinks in HTML. </h2>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Melbourne Shift</title>
 
-    <h3> New heading is added. </h3>
-    <p>This is the modified index.html file. </p>
-   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+
+<body>
+    <div class="hero-wrapper">
+
+        <header>
+
+            <h1>The Great Melbourne Shift</h1>
+
+            <p>
+                Melbourne's growth is no longer centered on the inner city. Since the pandemic,
+                internal migration has shifted outwards, with outer suburban and regional areas
+                gaining residents while inner Melbourne records significant losses.
+            </p>
+        </header>
+
+    </div>
+
+    <div class="story-band band-blue">
+
+        <section class="chapter-section chapter-shift">
+            <div class="section-label">PART 1: INTERNAL MIGRATION</div>
+
+            <h2>The shift away from inner Melbourne</h2>
+
+            <p>
+                Internal migration is not evenly spread across Victoria. Inner Melbourne is
+                losing residents internally, while Melbourne - West and Geelong are gaining.
+                The map shows where this pattern appears spatially, while the ranking chart
+                shows the scale of each region’s gain or loss.
+            </p>
+        </section>
+
+        <section class="story-section chart-stack">
+            <div class="chart-card chart-card-wide">
+                <div id="mapVis"></div>
+            </div>
+
+            <p class="map-note">
+                Circle size represents the magnitude of net internal migration, while colour
+                identifies each region. Locations are approximate and are intended to show
+                relative geographic position.
+            </p>
+
+            <div class="part-one-lower">
+                <div class="chart-card">
+                    <div id="barVis"></div>
+                </div>
+
+                <aside class="pathway-panel">
+                    <h3>Where are people going?</h3>
+
+                    <div class="pathway-grid compact">
+                        <div class="pathway-card">
+                            <div class="origin inner">Melbourne – Inner</div>
+                            <div class="pathway-arrow">↓</div>
+                            <div class="destination west">Melbourne – West</div>
+                            <div class="flow-value">+4,685</div>
+                            <div class="flow-note">Largest migration gain</div>
+                        </div>
+
+                        <div class="pathway-card">
+                            <div class="origin inner">Melbourne – Inner</div>
+                            <div class="pathway-arrow">↓</div>
+                            <div class="destination geelong">Geelong</div>
+                            <div class="flow-value">+3,662</div>
+                            <div class="flow-note">Regional growth hotspot</div>
+                        </div>
+
+                        <div class="pathway-card">
+                            <div class="origin inner">Melbourne – Inner</div>
+                            <div class="pathway-arrow">↓</div>
+                            <div class="destination mornington">Mornington Peninsula</div>
+                            <div class="flow-value">+198</div>
+                            <div class="flow-note">Coastal growth destination</div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="chapter-section chapter-time">
+            <div class="section-label">PART 2: TEMPORARY OR STRUCTURAL?</div>
+
+            <h2>Is the shift temporary?</h2>
+
+            <p>
+                A single year only shows part of the story. Population trends show that
+                inner Melbourne declined before beginning to recover, while Melbourne - West
+                and Geelong continued to grow. Comparing 2021 with 2025 also shows how
+                internal migration losses and gains intensified after the pandemic period.
+            </p>
+
+        </section>
+
+        <section class="story-section trend-section">
+            <div class="trend-grid">
+                <div class="chart-card">
+                    <div id="populationTrendVis"></div>
+                </div>
+
+                <div class="chart-card">
+                    <div id="migrationTrendVis"></div>
+                </div>
+            </div>
+
+            <p class="chart-note">
+                Colours represent selected focus regions. The population chart is indexed to 2019,
+                while the migration chart compares 2021 with 2025 internal migration gain or loss.
+            </p>
+
+            <p class="insight-callout">
+                This is not just a one-year shock. Inner Melbourne has recovered in 
+                population, but internal migration losses have intensified.
+            </p>
+        </section>
+
+        <section class="story-section">
+            <div class="section-intro">
+                <h2>Population scale and density reveal different pressures</h2>
+                <p>
+                    Dense inner areas are not always the strongest population gainers.
+                    Melbourne - Inner has high density but the largest internal migration loss,
+                    while larger outer regions such as Melbourne - West absorb more residents overall.
+                </p>
+            </div>
+
+            <div class="chart-grid">
+                    <div class="chart-card"><div id="densityVis"></div></div>
+                    <div class="chart-card"><div id="populationSizeVis"></div></div>
+            </div>
+
+        </section>
+
+        <section class="chapter-section chapter-people">
+
+            <div class="section-label">
+                PART 3: WHO IS MOVING?
+            </div>
+
+            <h2>Who is driving the shift?</h2>
+
+            <p>
+                The movement outward is not only about places. Age patterns help show which
+                groups are associated with inner, outer and regional growth.
+
+                Different regions attract different age groups. Inner Melbourne remains comparatively
+                younger, with a higher concentration of younger adults, while outer suburban and 
+                regional and coastal areas are dominated by family-age populations and older residents.
+                The heatmap shows how age groups are distributed across selected regions.
+            </p>
+        </section>
+
+        <section class="story-section heatmap-section">
+            <div class="heatmap-layout">
+                <div class="chart-card">
+                    <div id="heatmapVis"></div>
+                </div>
+
+                <aside class="insight-panel">
+                    <h3>Key age insight</h3>
+                    <p>
+                        Inner Melbourne has the strongest working-age profile, while Latrobe–Gippsland,
+                        Mornington Peninsula and Bendigo have older age structures. This helps explain why
+                        migration patterns differ across inner, outer and regional areas.
+                    </p>
+                </aside>
+            </div>
+        </section>
+
+        <section class="story-section">
+            <div class="section-intro">
+                <h2>What drives population change?</h2>
+                <p>
+                    Population growth is not caused by migration alone. Different regions are shaped
+                    by different combinations of natural increase, internal migration, and overseas migration.
+                </p>
+            </div>
+
+            <div class="chart-card chart-card-wide">
+                <div id="componentsVis"></div>
+            </div>
+
+            <p class="chart-note">
+                Overseas migration offsets large internal migration losses, allowing Inner Melbourne's 
+                population to recover despite continued resident outflow.
+            </p>
+
+        </section>
+
+        
+        <section class="story-section">
+            <div class="section-intro">
+                <h2>Housing affordability and remote work are reshaping Melbourne</h2>
+                <p>
+                    The outward shift is not only about population numbers. Inner Melbourne combines
+                    high housing costs, higher work-from-home rates and strong public transport use,
+                    while outer and regional growth areas are generally more affordable and more
+                    car-dependent. This suggests people are choosing different trade-offs between 
+                    cost, space, work, and mobility.
+                </p>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <div id="lifestyleVis"></div>
+                </div>
+
+                <div>
+                    <div class="chart-card"><div id="housingVis"></div></div>
+                    <p class="chart-note">
+                        Higher work-from-home rates coincide with stronger migration gains in outer regions.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+    
+        <section class="chapter-section final-section">
+            <div class="section-label">PART 4: What does this mean?</div>
+
+            <p class="final-statement">
+                Melbourne isn't simply growing, it's becoming more decentralised.
+            </p>
+
+            <p>
+                The evidence across migration, housing, work, and age patterns suggests that 
+                Melbourne’s post-pandemic growth is becoming increasingly decentralised. While 
+                inner Melbourne continues to attract overseas migrants and younger adults, many 
+                residents are moving toward outer suburban and regional areas offering greater 
+                affordability and different lifestyles.
+            </p>
+
+            <p>
+                Regions such as Melbourne – West, Geelong, and the Mornington Peninsula are no 
+                longer peripheral growth areas, they are becoming central to Melbourne’s future 
+                population growth.
+            </p>
+
+            <p>
+                These patterns suggest that future infrastructure, housing and transport 
+                planning will need to focus increasingly on outer suburban and regional growth corridors.
+            </p>
+        </section>
+
+        <footer>
+            <p>
+                Data sources:
+                ABS Regional Population 2024–25,
+                ABS Census 2021,
+                Victorian Property Sales Report 2025.
+            </p>
+
+            <p>
+                Authored by [Full Name]. May 2026.
+                Visualisations created using Vega-Lite.
+            </p>
+
+            <p>
+                Generative AI (ChatGPT) was used for Vega-Lite JSON coding assistance.
+
+            </p>
+        </footer>
+
+    </div>
+
+<script src="main.js"></script>
+
 </body>
 </html>
