@@ -473,7 +473,7 @@ const migrationTrendChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "width": 360,
-    "height": 260,
+    "height": 300,
     "padding": 8,
 
     "data": {"url": "Data/slope_clean.csv"},
@@ -553,7 +553,7 @@ const densityChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "width": 390,
-    "height": 250,
+    "height": 300,
     "padding": 5,
 
     "data": {"url": "Data/density_clean.csv"},
