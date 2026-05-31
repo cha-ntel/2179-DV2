@@ -946,7 +946,14 @@ const componentsChart = {
                     "field": "Value",
                     "type": "quantitative",
                     "title": "Population component, 2024–25",
-                    "scale": {"domain": [-7000, 15000]}
+                    "scale": {"domain": [-8000, 16000]},
+                    "axis": {
+                        "grid": true,
+                        "gridColor": "#e5e7eb",
+                        "gridOpacity": 1,
+                        "tickCount": 7,
+                        "format": ","
+                    }
                 },
                 "color": {
                     "field": "Component",
@@ -977,17 +984,17 @@ const componentsChart = {
         },
 
         {
-            "transform": [
-                {
-                    "filter": "datum.Component === 'Net internal migration' || datum.Component === 'Net overseas migration'"
-                }
-            ],
             "mark": {
                 "type": "text",
                 "fontSize": 11,
                 "fontWeight": "700",
-                "dx": 9,
-                "baseline": "middle"
+                "baseline": "middle",
+                "align": {
+                    "expr": "datum.Value < 0 ? 'right' : 'left'"
+                },
+                "dx": {
+                    "expr": "datum.Value < 0 ? -10 : 10"
+                }
             },
             "encoding": {
                 "y": {
