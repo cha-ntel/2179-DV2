@@ -1143,8 +1143,8 @@ const housingChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "width": 420,
-    "height": 430,
-    "padding": {"left": 10, "right": 10, "top": 10, "bottom": 10},
+    "height": 390,
+    "padding": {"left": 10, "right": 10, "top": 20, "bottom": 15},
 
     "data": {"url": "Data/housing_clean.csv"},
 
@@ -1176,77 +1176,121 @@ const housingChart = {
         {
             "calculate": "abs(datum.Migration)",
             "as": "MigrationSize"
+        },
+        {
+            "calculate":
+                "datum.Region === 'Melbourne - Inner' ? 'Melbourne - Inner' : " +
+                "datum.Region === 'Melbourne - West' ? 'Melbourne - West' : " +
+                "datum.Region === 'Mornington Peninsula' ? 'Mornington Peninsula' : datum.Region",
+            "as": "Label"
+        },
+        {
+            "calculate":
+                "datum.Region === 'Melbourne - Inner' ? -52 : " +
+                "datum.Region === 'Melbourne - West' ? 8 : " +
+                "datum.Region === 'Geelong' ? 10 : " +
+                "datum.Region === 'Mornington Peninsula' ? 8 : " +
+                "datum.Region === 'Ballarat' ? 8 : 8",
+            "as": "LabelDx"
+        },
+        {
+            "calculate":
+                "datum.Region === 'Melbourne - Inner' ? -8 : " +
+                "datum.Region === 'Melbourne - West' ? -16 : " +
+                "datum.Region === 'Geelong' ? 12 : " +
+                "datum.Region === 'Mornington Peninsula' ? -10 : " +
+                "datum.Region === 'Ballarat' ? -8 : -8",
+            "as": "LabelDy"
         }
     ],
 
-    "mark": {
-        "type": "circle",
-        "opacity": 0.9,
-        "stroke": "white",
-        "strokeWidth": 2.5
-    },
-
-    "encoding": {
-        "x": {
-            "field": "MedianPrice",
-            "type": "quantitative",
-            "title": "Median house price",
-            "scale": {"domain": [500000, 1400000]},
-            "axis": {"format": "$,.0f"}
-        },
-
-        "y": {
-            "field": "WFH",
-            "type": "quantitative",
-            "title": "Worked from home (%)",
-            "scale": {"domain": [0, 50]}
-        },
-
-        "color": {
-            "field": "Region",
-            "type": "nominal",
-            "scale": {
-                "domain": REGION_DOMAIN,
-                "range": REGION_RANGE
+    "layer": [
+        {
+            "mark": {
+                "type": "circle",
+                "opacity": 0.9,
+                "stroke": "white",
+                "strokeWidth": 2.5
             },
-            "legend": {
-                "title": "Region",
-                "orient": "bottom",
-                "columns": 3,
-                "symbolType": "circle",
-                "symbolSize": 170,
-                "labelFontSize": 12,
-                "titleFontSize": 13,
-                "offset": 8
+
+            "encoding": {
+                "x": {
+                    "field": "MedianPrice",
+                    "type": "quantitative",
+                    "title": "Median house price",
+                    "scale": {"domain": [480000, 1400000]},
+                    "axis": {"format": "$,.0f"}
+                },
+
+                "y": {
+                    "field": "WFH",
+                    "type": "quantitative",
+                    "title": "Worked from home (%)",
+                    "scale": {"domain": [0, 50]}
+                },
+
+                "color": {
+                    "field": "Region",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": REGION_DOMAIN,
+                        "range": REGION_RANGE
+                    },
+                    "legend": null
+                },
+
+                "size": {
+                    "field": "MigrationSize",
+                    "type": "quantitative",
+                    "scale": {
+                        "domain": [0, 6000],
+                        "range": [500, 2600]
+                    },
+                    "legend": {
+                        "title": "Migration size",
+                        "orient": "bottom",
+                        "values": [0, 1000, 2000, 3000, 4000, 5000],
+                        "labelExpr": "format(datum.value, ',')",
+                        "symbolType": "circle",
+                        "labelFontSize": 11,
+                        "titleFontSize": 12
+                    }
+                },
+
+                "tooltip": [
+                    {"field": "Region", "title": "Region"},
+                    {"field": "MedianPrice", "title": "Median house price", "format": "$,.0f"},
+                    {"field": "WFH", "title": "Worked from home (%)", "format": ".1f"},
+                    {"field": "Migration", "title": "Net internal migration", "format": ","}
+                ]
             }
         },
 
-        "size": {
-            "field": "MigrationSize",
-            "type": "quantitative",
-            "scale": {
-                "domain": [0, 6000],
-                "range": [500, 2600]
+        {
+            "mark": {
+                "type": "text",
+                "fontSize": 11,
+                "fontWeight": "700"
             },
-            "legend": {
-                "title": "Migration size",
-                "orient": "bottom",
-                "values": [0, 1000, 2000, 3000, 4000, 5000],
-                "labelExpr": "format(datum.value, ',')",
-                "symbolType": "circle",
-                "labelFontSize": 11,
-                "titleFontSize": 12,
-                "offset": 34
-            }
-        },
 
-        "tooltip": [
-            {"field": "Region", "title": "Region"},
-            {"field": "MedianPrice", "title": "Median house price", "format": "$,.0f"},
-            {"field": "WFH", "title": "Worked from home (%)", "format": ".1f"},
-            {"field": "Migration", "title": "Net internal migration", "format": ","}
-        ]
-    },
+            "encoding": {
+                "x": {"field": "MedianPrice", "type": "quantitative"},
+                "y": {"field": "WFH", "type": "quantitative"},
+                "text": {"field": "Label"},
+                "dx": {"field": "LabelDx", "type": "quantitative"},
+                "dy": {"field": "LabelDy", "type": "quantitative"},
+                "color": {
+                    "field": "Region",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": REGION_DOMAIN,
+                        "range": REGION_RANGE
+                    },
+                    "legend": null
+                }
+            }
+        }
+    ],
 
     "config": BASE_CONFIG
 };
