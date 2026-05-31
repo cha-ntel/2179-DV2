@@ -307,11 +307,12 @@ const barChart = {
                 ]
             }
         },
-        "mark": {
-            "type": "text",
-            "fontSize": 11,
-            "fontWeight": "700"
-        },
+        {
+            "mark": {
+                "type": "text",
+                "fontSize": 11,
+                "fontWeight": "700"
+            },
             "encoding": {
                 "x": {"field": "ShortRegion", "type": "nominal", "sort": "-y"},
                 "y": {"field": "Migration", "type": "quantitative"},
