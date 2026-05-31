@@ -852,7 +852,7 @@ const componentsChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "width": 760,
-    "height": 400,
+    "height": 420,
     "padding": {"left": 10, "right": 10, "top": 10, "bottom": 10},
 
     "data": {"url": "Data/components_clean.csv"},
@@ -863,12 +863,17 @@ const componentsChart = {
                 "field": "Region",
                 "oneOf": CORE_REGIONS
             }
+        },
+        {
+            "calculate":
+                "datum.Value > 0 ? '+' + format(datum.Value, ',') : format(datum.Value, ',')",
+            "as": "ValueLabel"
         }
     ],
 
     "title": {
         "text": "Population growth has multiple drivers",
-        "subtitle": "Natural increase, overseas and internal migration",
+        "subtitle": "Natural increase, internal migration and overseas migration, 2024–25",
         "anchor": "start",
         "fontSize": 16,
         "subtitleFontSize": 11
@@ -878,27 +883,22 @@ const componentsChart = {
         {
             "mark": {
                 "type": "rule",
-                "strokeWidth": 3,
-                "opacity": 0.45
+                "strokeWidth": 4,
+                "opacity": 0.35
             },
             "encoding": {
                 "y": {
                     "field": "Region",
                     "type": "nominal",
-                    "title": null
+                    "title": null,
+                    "sort": CORE_REGIONS
                 },
                 "yOffset": {
                     "field": "Component",
                     "type": "nominal"
                 },
-                "x": {
-                    "datum": 0,
-                    "type": "quantitative"
-                },
-                "x2": {
-                    "field": "Value",
-                    "type": "quantitative"
-                },
+                "x": {"datum": 0},
+                "x2": {"field": "Value"},
                 "color": {
                     "field": "Component",
                     "type": "nominal",
@@ -910,14 +910,15 @@ const componentsChart = {
                         ],
                         "range": [PALE_BLUE, BLUE, ORANGE]
                     },
-                    "legend": {"title": "Component"}
+                    "legend": null
                 }
             }
         },
+
         {
             "mark": {
                 "type": "circle",
-                "size": 180,
+                "size": 220,
                 "stroke": "white",
                 "strokeWidth": 2
             },
@@ -925,7 +926,8 @@ const componentsChart = {
                 "y": {
                     "field": "Region",
                     "type": "nominal",
-                    "title": null
+                    "title": null,
+                    "sort": CORE_REGIONS
                 },
                 "yOffset": {
                     "field": "Component",
@@ -934,7 +936,8 @@ const componentsChart = {
                 "x": {
                     "field": "Value",
                     "type": "quantitative",
-                    "title": "Population component, 2024–25"
+                    "title": "Population component, 2024–25",
+                    "scale": {"domain": [-7000, 15000]}
                 },
                 "color": {
                     "field": "Component",
@@ -950,30 +953,38 @@ const componentsChart = {
                     "legend": {
                         "title": "Component",
                         "orient": "right",
+                        "symbolType": "circle",
                         "symbolSize": 220,
                         "labelFontSize": 13,
-                        "titleFontSize": 15
+                        "titleFontSize": 14
                     }
                 },
                 "tooltip": [
-                    {"field": "Region"},
-                    {"field": "Component"},
-                    {"field": "Value", "format": ","}
+                    {"field": "Region", "title": "Region"},
+                    {"field": "Component", "title": "Component"},
+                    {"field": "Value", "title": "Population contribution", "format": ","}
                 ]
             }
-        }, 
+        },
+
         {
+            "transform": [
+                {
+                    "filter": "datum.Component === 'Net internal migration' || datum.Component === 'Net overseas migration'"
+                }
+            ],
             "mark": {
                 "type": "text",
                 "fontSize": 11,
-                "fontWeight": "600",
-                "dx": 8,
+                "fontWeight": "700",
+                "dx": 9,
                 "baseline": "middle"
             },
             "encoding": {
                 "y": {
                     "field": "Region",
-                    "type": "nominal"
+                    "type": "nominal",
+                    "sort": CORE_REGIONS
                 },
                 "yOffset": {
                     "field": "Component",
@@ -983,11 +994,7 @@ const componentsChart = {
                     "field": "Value",
                     "type": "quantitative"
                 },
-                "text": {
-                    "field": "Value",
-                    "type": "quantitative",
-                    "format": ","
-                },
+                "text": {"field": "ValueLabel"},
                 "color": {
                     "field": "Component",
                     "type": "nominal",
