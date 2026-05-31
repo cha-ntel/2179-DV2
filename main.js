@@ -856,7 +856,7 @@ const componentsChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "width": 760,
-    "height": 420,
+    "height": 460,
     "padding": {"left": 10, "right": 10, "top": 10, "bottom": 10},
 
     "data": {"url": "Data/components_clean.csv"},
@@ -950,9 +950,10 @@ const componentsChart = {
                     "axis": {
                         "grid": true,
                         "gridColor": "#e5e7eb",
-                        "gridOpacity": 1,
-                        "tickCount": 7,
-                        "format": ","
+                        "values": [-5000, 0, 5000, 10000, 15000],
+                        "labelExpr":
+                            "datum.value == 0 ? '0' : " +
+                            "abs(datum.value) >= 1000 ? format(datum.value/1000, '.0f') + 'k' : datum.value"
                     }
                 },
                 "color": {
@@ -1140,8 +1141,9 @@ vegaEmbed("#lifestyleVis", lifestyleChart, {actions:false});
 
 const housingChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
     "width": 420,
-    "height": 350,
+    "height": 430,
     "padding": {"left": 10, "right": 10, "top": 10, "bottom": 10},
 
     "data": {"url": "Data/housing_clean.csv"},
@@ -1174,77 +1176,77 @@ const housingChart = {
         {
             "calculate": "abs(datum.Migration)",
             "as": "MigrationSize"
+        }
+    ],
+
+    "mark": {
+        "type": "circle",
+        "opacity": 0.9,
+        "stroke": "white",
+        "strokeWidth": 2.5
+    },
+
+    "encoding": {
+        "x": {
+            "field": "MedianPrice",
+            "type": "quantitative",
+            "title": "Median house price",
+            "scale": {"domain": [500000, 1400000]},
+            "axis": {"format": "$,.0f"}
         },
-        {
-            "calculate": 
-                "datum.Region === 'Melbourne - Inner' ? 'Inner' : " +
-                "datum.Region === 'Melbourne - West' ? 'West' : " +
-                "datum.Region === 'Mornington Peninsula' ? 'Mornington' : datum.Region",
-            "as": "Label"
-        }
-    ],
 
+        "y": {
+            "field": "WFH",
+            "type": "quantitative",
+            "title": "Worked from home (%)",
+            "scale": {"domain": [0, 50]}
+        },
 
-    "layer": [
-        {
-            "mark": {"type": "circle", "opacity": 0.9, "stroke": "white", "strokeWidth": 2.5},
-            "encoding": {
-                "x": {
-                    "field": "MedianPrice",
-                    "type": "quantitative",
-                    "title": "Median house price",
-                    "scale": {"domain": [500000, 1400000]},
-                    "axis": {"format": "$,.0f"}
-                },
-                "y": {
-                    "field": "WFH",
-                    "type": "quantitative",
-                    "title": "Worked from home (%)",
-                    "scale": {"domain": [0, 50]}
-                },
-                "color": {
-                    "field": "Region",
-                    "type": "nominal",
-                    "scale": {
-                        "domain": REGION_DOMAIN,
-                        "range": REGION_RANGE
-                    },
-                    "legend": {
-                        "title": "Region",
-                        "orient": "bottom",
-                        "columns": 3,
-                        "symbolType": "circle",
-                        "symbolSize": 180,
-                        "labelFontSize": 12,
-                        "titleFontSize": 13
-                    }
-                },
-                "size": {
-                    "field": "MigrationSize",
-                    "type": "quantitative",
-                    "scale": {
-                        "domain": [0, 6000],
-                        "range": [500, 2600]
-                    },
-                    "legend": {
-                        "title": "Migration size",
-                        "orient": "bottom",
-                        "values": [0, 1000, 2000, 3000, 4000, 5000],
-                        "labelExpr": "format(datum.value, ',')",
-                        "symbolType": "circle",
-                        "labelFontSize": 11,
-                        "titleFontSize": 12
-                    }
-                },
-                "tooltip": [
-                    {"field": "Region"},
-                    {"field": "MedianPrice", "title": "Median house price", "format": "$,.0f"},
-                    {"field": "WFH", "title": "Worked from home (%)", "format": ".1f"},
-                    {"field": "Migration", "title": "Net internal migration", "format": ","}
-                ]
+        "color": {
+            "field": "Region",
+            "type": "nominal",
+            "scale": {
+                "domain": REGION_DOMAIN,
+                "range": REGION_RANGE
+            },
+            "legend": {
+                "title": "Region",
+                "orient": "bottom",
+                "columns": 3,
+                "symbolType": "circle",
+                "symbolSize": 170,
+                "labelFontSize": 12,
+                "titleFontSize": 13,
+                "offset": 8
             }
-        }
-    ],
+        },
+
+        "size": {
+            "field": "MigrationSize",
+            "type": "quantitative",
+            "scale": {
+                "domain": [0, 6000],
+                "range": [500, 2600]
+            },
+            "legend": {
+                "title": "Migration size",
+                "orient": "bottom",
+                "values": [0, 1000, 2000, 3000, 4000, 5000],
+                "labelExpr": "format(datum.value, ',')",
+                "symbolType": "circle",
+                "labelFontSize": 11,
+                "titleFontSize": 12,
+                "offset": 34
+            }
+        },
+
+        "tooltip": [
+            {"field": "Region", "title": "Region"},
+            {"field": "MedianPrice", "title": "Median house price", "format": "$,.0f"},
+            {"field": "WFH", "title": "Worked from home (%)", "format": ".1f"},
+            {"field": "Migration", "title": "Net internal migration", "format": ","}
+        ]
+    },
 
     "config": BASE_CONFIG
 };
