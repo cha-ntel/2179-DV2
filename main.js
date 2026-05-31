@@ -325,11 +325,12 @@ const barChart = {
                         "value": -16
                     },
                     "value": 22
-                }
+                },
                 "color": {
                     "value": "#1e293b"
                 }
             }
+        }
     ],
 
     "config": BASE_CONFIG
