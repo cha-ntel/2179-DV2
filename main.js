@@ -652,8 +652,10 @@ fetch("Data/population_size.csv")
 
                     "mark": {
                         "type": "square",
-                        "size": 105,
-                        "opacity": 0.9
+                        "size": 90,
+                        "opacity": 0.9,
+                        "stroke": "white",
+                        "strokeWidth": 2
                     },
 
                     "encoding": {
