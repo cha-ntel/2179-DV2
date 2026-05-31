@@ -330,7 +330,6 @@ const barChart = {
                     "value": "#1e293b"
                 }
             }
-        }
     ],
 
     "config": BASE_CONFIG
