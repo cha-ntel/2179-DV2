@@ -640,8 +640,8 @@ fetch("Data/population_size.csv")
         const rows = vega.read(csvText, {type: "csv", parse: "auto"});
 
         const unitValue = 10000;
-        const cols = 12;
-        const rowGap = 5;
+        const cols = 10;
+        const rowGap = 6;
 
         const selectedRows = rows.filter(d => REGION_DOMAIN.includes(d.Region));
 
@@ -663,8 +663,8 @@ fetch("Data/population_size.csv")
                 Region: d.Region,
                 Label: shortLabel,
                 PopulationLabel: `${Math.round(d.Population / 1000)}k`,
-                X: -4.2,
-                Y: baseRow + 1.5
+                X: -2.8,
+                Y: baseRow + 1.4
             });
 
             for (let i = 0; i < units; i++) {
@@ -681,7 +681,7 @@ fetch("Data/population_size.csv")
             "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
             "width": 390,
-            "height": 250,
+            "height": 390,
 
             "title": {
                 "text": "Population scale varies by region",
@@ -697,7 +697,7 @@ fetch("Data/population_size.csv")
 
                     "mark": {
                         "type": "square",
-                        "size": 70,
+                        "size": 105,
                         "opacity": 0.9
                     },
 
@@ -706,7 +706,7 @@ fetch("Data/population_size.csv")
                             "field": "Col",
                             "type": "quantitative",
                             "axis": null,
-                            "scale": {"domain": [-5, 12]}
+                            "scale": {"domain": [-3.5, 10.5]}
                         },
 
                         "y": {
@@ -757,14 +757,13 @@ fetch("Data/population_size.csv")
                     "mark": {
                         "type": "text",
                         "align": "left",
-                        "dx": -235,
                         "fontSize": 11,
                         "fontWeight": "700",
                         "fill": "#1e293b"
                     },
 
                     "encoding": {
-                        "x": {"value": 300},
+                        "x": {"value": 118},
                         "y": {"field": "Y", "type": "quantitative"},
                         "text": {"field": "PopulationLabel"}
                     }
