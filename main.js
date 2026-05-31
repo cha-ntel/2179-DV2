@@ -1286,13 +1286,7 @@ const housingChart = {
                 "dx": {"field": "LabelDx", "type": "quantitative"},
                 "dy": {"field": "LabelDy", "type": "quantitative"},
                 "color": {
-                    "field": "Region",
-                    "type": "nominal",
-                    "scale": {
-                        "domain": REGION_DOMAIN,
-                        "range": REGION_RANGE
-                    },
-                    "legend": null
+                    "value": "#1e293b"
                 }
             }
         }
