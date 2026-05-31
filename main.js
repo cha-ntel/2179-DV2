@@ -1134,7 +1134,7 @@ vegaEmbed("#lifestyleVis", lifestyleChart, {actions:false});
 const housingChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "width": 420,
-    "height": 320,
+    "height": 350,
     "padding": {"left": 10, "right": 10, "top": 10, "bottom": 10},
 
     "data": {"url": "Data/housing_clean.csv"},
@@ -1195,6 +1195,23 @@ const housingChart = {
                     "title": "Worked from home (%)",
                     "scale": {"domain": [0, 50]}
                 },
+                "color": {
+                    "field": "Region",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": REGION_DOMAIN,
+                        "range": REGION_RANGE
+                    },
+                    "legend": {
+                        "title": "Region",
+                        "orient": "bottom",
+                        "columns": 3,
+                        "symbolType": "circle",
+                        "symbolSize": 180,
+                        "labelFontSize": 12,
+                        "titleFontSize": 13
+                    }
+                },
                 "size": {
                     "field": "MigrationSize",
                     "type": "quantitative",
@@ -1212,33 +1229,12 @@ const housingChart = {
                         "titleFontSize": 12
                     }
                 },
-                "color": {
-                    "field": "Region",
-                    "type": "nominal",
-                    "scale": {"domain": REGION_DOMAIN, "range": REGION_RANGE},
-                    "legend": null
-                },
-                "text": {"field": "Label"},
                 "tooltip": [
                     {"field": "Region"},
                     {"field": "MedianPrice", "title": "Median house price", "format": "$,.0f"},
                     {"field": "WFH", "title": "Worked from home (%)", "format": ".1f"},
                     {"field": "Migration", "title": "Net internal migration", "format": ","}
                 ]
-            }
-        },
-        {
-            "mark": {"type": "text", "fontSize": 11, "fontWeight": "600", "dx": 8, "dy": -8},
-            "encoding": {
-                "x": {"field": "MedianPrice", "type": "quantitative"},
-                "y": {"field": "WFH", "type": "quantitative"},
-                "text": {"field": "Region"},
-                "color": {
-                    "field": "Region",
-                    "type": "nominal",
-                    "scale": {"domain": REGION_DOMAIN, "range": REGION_RANGE},
-                    "legend": null
-                }
             }
         }
     ],
