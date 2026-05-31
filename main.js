@@ -308,20 +308,26 @@ const barChart = {
             }
         },
         {
-            "mark": {"type": "text", "fontSize": 11, "fontWeight": "700"},
+            "mark": {
+                "type": "text",
+                "fontSize": 11,
+                "fontWeight": "700",
+                "stroke": "white",
+                "strokeWidth": 2
+            },
             "encoding": {
                 "x": {"field": "ShortRegion", "type": "nominal", "sort": "-y"},
                 "y": {"field": "Migration", "type": "quantitative"},
                 "text": {"field": "Migration", "format": ","},
                 "dy": {
-                    "condition": {"test": "datum.Migration >= 0", "value": -8},
-                    "value": 14
-                },
+                    "condition": {
+                        "test": "datum.Migration >= 0",
+                        "value": -16
+                    },
+                    "value": 22
+                }
                 "color": {
-                    "field": "Region",
-                    "type": "nominal",
-                    "scale": {"domain": REGION_DOMAIN, "range": REGION_RANGE},
-                    "legend": null
+                    "value": "#1e293b"
                 }
             }
         }
