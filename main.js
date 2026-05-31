@@ -869,8 +869,7 @@ const componentsChart = {
             }
         },
         {
-            "calculate":
-                "datum.Value > 0 ? '+' + format(datum.Value, ',') : format(datum.Value, ',')",
+            "calculate": "datum.Value > 0 ? '+' + format(datum.Value, ',') : format(datum.Value, ',')",
             "as": "ValueLabel"
         }
     ],
@@ -901,8 +900,14 @@ const componentsChart = {
                     "field": "Component",
                     "type": "nominal"
                 },
-                "x": {"datum": 0},
-                "x2": {"field": "Value"},
+                "x": {
+                    "datum": 0,
+                    "type": "quantitative"
+                },
+                "x2": {
+                    "field": "Value",
+                    "type": "quantitative"
+                },
                 "color": {
                     "field": "Component",
                     "type": "nominal",
