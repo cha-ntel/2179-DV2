@@ -228,27 +228,20 @@ vegaEmbed("#mapVis", mapChart, {actions:false});
 const barChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-    "width": 400,
-    "height": 400,
-    "padding": {"left": 10, "right": 10, "top": 20, "bottom": 20},
+    "width": 420,
+    "height": 500,
+    "padding": {"left": 10, "right": 10, "top": 30, "bottom": 20},
 
-    "data": {
-        "url": "Data/migration_clean.csv"
-    },
+    "data": {"url": "Data/migration_clean.csv"},
 
     "transform": [
-        {
-            "filter": {
-                "field": "Region",
-                "oneOf": CORE_REGIONS
-            }
-        },
+        {"filter": {"field": "Region", "oneOf": CORE_REGIONS}},
         {
             "calculate":
-                "datum.Region === 'Melbourne - Inner' ? 'Melbourne -\\nInner' : " +
-                "datum.Region === 'Melbourne - West' ? 'Melbourne -\\nWest' : " +
-                "datum.Region === 'Mornington Peninsula' ? 'Mornington\\nPeninsula' : " +
-                "datum.Region === 'Latrobe - Gippsland' ? 'Latrobe -\\nGippsland' : datum.Region",
+                "datum.Region === 'Melbourne - Inner' ? 'Inner' : " +
+                "datum.Region === 'Melbourne - West' ? 'West' : " +
+                "datum.Region === 'Mornington Peninsula' ? 'Mornington' : " +
+                "datum.Region === 'Latrobe - Gippsland' ? 'Latrobe' : datum.Region",
             "as": "ShortRegion"
         }
     ],
@@ -263,113 +256,67 @@ const barChart = {
 
     "layer": [
         {
-            "mark": {
-                "type": "rule",
-                "color": "#334155",
-                "strokeWidth": 1.5
-            },
-            "encoding": {
-                "y": {"datum": 0}
-            }
+            "mark": {"type": "rule", "color": "#334155", "strokeWidth": 1.5},
+            "encoding": {"y": {"datum": 0}}
         },
-
         {
             "mark": {
                 "type": "bar",
-                "cornerRadiusTopLeft": 2,
-                "cornerRadiusTopRight": 2
+                "cornerRadiusTopLeft": 3,
+                "cornerRadiusTopRight": 3
             },
-
             "encoding": {
                 "x": {
                     "field": "ShortRegion",
                     "type": "nominal",
                     "sort": "-y",
-                    "title": "Region",
+                    "title": null,
                     "axis": {
-                        "labelAngle": 0,
+                        "labelAngle": -35,
                         "labelFontSize": 11,
-                        "labelLimit": 95
+                        "labelLimit": 90
                     }
                 },
-
                 "y": {
                     "field": "Migration",
                     "type": "quantitative",
                     "title": "Net internal migration, 2024–25",
-                    "scale": {
-                        "domain": [-7000, 5500]
-                    }
+                    "scale": {"domain": [-7000, 5500]}
                 },
-
                 "color": {
                     "field": "Region",
                     "type": "nominal",
-                    "scale": {
-                        "domain": REGION_DOMAIN,
-                        "range": REGION_RANGE
-                    },
+                    "scale": {"domain": REGION_DOMAIN, "range": REGION_RANGE},
                     "legend": {
                         "title": "Region",
                         "orient": "bottom",
-                        "columns": 3,
+                        "columns": 2,
                         "symbolType": "square",
-                        "symbolSize": 140,
+                        "symbolSize": 150,
                         "labelFontSize": 12,
                         "titleFontSize": 13
                     }
                 },
-
                 "tooltip": [
                     {"field": "Region", "title": "Region"},
-                    {
-                        "field": "Migration",
-                        "title": "Net internal migration",
-                        "format": ","
-                    }
+                    {"field": "Migration", "title": "Net internal migration", "format": ","}
                 ]
             }
         },
-
         {
-            "mark": {
-                "type": "text",
-                "fontSize": 11,
-                "fontWeight": "700"
-            },
-
+            "mark": {"type": "text", "fontSize": 11, "fontWeight": "700"},
             "encoding": {
-                "x": {
-                    "field": "ShortRegion",
-                    "type": "nominal",
-                    "sort": "-y"
-                },
-
-                "y": {
-                    "field": "Migration",
-                    "type": "quantitative"
-                },
-
-                "text": {
-                    "field": "Migration",
-                    "format": ","
-                },
-
+                "x": {"field": "ShortRegion", "type": "nominal", "sort": "-y"},
+                "y": {"field": "Migration", "type": "quantitative"},
+                "text": {"field": "Migration", "format": ","},
                 "dy": {
-                    "condition": {
-                        "test": "datum.Migration >= 0",
-                        "value": -8
-                    },
+                    "condition": {"test": "datum.Migration >= 0", "value": -8},
                     "value": 14
                 },
-
                 "color": {
                     "field": "Region",
                     "type": "nominal",
-                    "scale": {
-                        "domain": REGION_DOMAIN,
-                        "range": REGION_RANGE
-                    },
+                    "scale": {"domain": REGION_DOMAIN, "range": REGION_RANGE},
                     "legend": null
                 }
             }
@@ -1067,8 +1014,8 @@ const lifestyleChart = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "width": 420,
-    "height": 360,
-    "padding": {"left": 5, "right": 5, "top": 5, "bottom": 5},
+    "height": 430,
+    "padding": {"left": 5, "right": 5, "top": 30, "bottom": 20},
 
     "data": {"url": "Data/lifestyle_clean.csv"},
 
@@ -1081,20 +1028,12 @@ const lifestyleChart = {
     },
 
     "transform": [
-        {
-            "fold": ["WFH", "CarCommute", "PublicTransport"],
-            "as": ["Type", "Value"]
-        },
+        {"fold": ["WFH", "CarCommute", "PublicTransport"], "as": ["Type", "Value"]},
         {
             "calculate": "datum.Type === 'WFH' ? 'Worked from home' : datum.Type === 'CarCommute' ? 'Travelled by car' : 'Public transport'",
             "as": "Profile"
         },
-        {
-            "filter": {
-                "field": "Region",
-                "oneOf": TREND_REGIONS
-            }
-        }
+        {"filter": {"field": "Region", "oneOf": TREND_REGIONS}}
     ],
 
     "layer": [
@@ -1102,7 +1041,7 @@ const lifestyleChart = {
             "mark": {
                 "type": "line",
                 "strokeWidth": 3,
-                "opacity": 0.8
+                "opacity": 0.85
             },
             "encoding": {
                 "x": {
@@ -1124,17 +1063,13 @@ const lifestyleChart = {
                 "color": {
                     "field": "Region",
                     "type": "nominal",
-                    "scale": {
-                        "domain": TREND_REGIONS,
-                        "range": TREND_RANGE
-                    },
+                    "scale": {"domain": TREND_REGIONS, "range": TREND_RANGE},
                     "legend": {
                         "title": "Region",
                         "orient": "bottom",
-                        "columns": 2,
+                        "columns": 1,
                         "symbolType": "circle",
-                        "symbolSize": 180,
-                        "symbolStrokeWidth": 0,
+                        "symbolSize": 200,
                         "labelFontSize": 13,
                         "titleFontSize": 14
                     }
@@ -1145,15 +1080,12 @@ const lifestyleChart = {
         {
             "mark": {
                 "type": "circle",
-                "size": 100,
+                "size": 130,
                 "stroke": "white",
                 "strokeWidth": 2
             },
             "encoding": {
-                "x": {
-                    "field": "Value",
-                    "type": "quantitative"
-                },
+                "x": {"field": "Value", "type": "quantitative"},
                 "y": {
                     "field": "Profile",
                     "type": "nominal",
@@ -1166,10 +1098,7 @@ const lifestyleChart = {
                 "color": {
                     "field": "Region",
                     "type": "nominal",
-                    "scale": {
-                        "domain": TREND_REGIONS,
-                        "range": TREND_RANGE
-                    },
+                    "scale": {"domain": TREND_REGIONS, "range": TREND_RANGE},
                     "legend": null
                 },
                 "tooltip": [
